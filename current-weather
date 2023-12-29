@@ -1,7 +1,11 @@
+This code displays a notification of the current weather from The Weather Channel.
+
+#import required packages
 import requests 
 from bs4 import BeautifulSoup 
 from plyer import notification
 
+#scrape the data
 def extract_data(url):
     n = requests.get(url)
     return n.text
@@ -15,6 +19,7 @@ current_temp = soup.find("span",
 
 temp = current_temp.text
 
+#create the notification
 result = "Current temp is " + temp + " in Moorestown, NJ"
 
 notification.notify(
