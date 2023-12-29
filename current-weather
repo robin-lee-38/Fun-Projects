@@ -1,0 +1,24 @@
+import requests 
+from bs4 import BeautifulSoup 
+from plyer import notification
+
+def extract_data(url):
+    n = requests.get(url)
+    return n.text
+
+htmldata = extract_data("https://weather.com/weather/today/l/f58a82b001e6b21cd2978f1aba8cf3a902949291ffc2350b1458c046e6243c5d")
+soup = BeautifulSoup(htmldata, 'html.parser')
+print(soup.prettify())
+
+current_temp = soup.find("span",
+                             class_="CurrentConditions--tempValue--MHmYY")
+
+temp = current_temp.text
+
+result = "Current temp is " + temp + " in Moorestown, NJ"
+
+notification.notify(
+    title = "Weather update",
+    message = result,
+    timeout = 10
+)
